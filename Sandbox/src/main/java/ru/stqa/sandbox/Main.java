@@ -1,3 +1,4 @@
+package ru.stqa.sandbox;
 
 public class Main {
 
