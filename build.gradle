@@ -1,20 +1,13 @@
-plugins {
-    id 'java'
-}
+apply plugin: 'java'
+apply plugin: 'application'
+mainClassName = "MyFirstProgram"
 
-group 'org.example'
-version '1.0-SNAPSHOT'
-
-sourceCompatibility = 1.8
-
-repositories {
+repositories{
     mavenCentral()
 }
 
-dependencies {
-
+dependencies{
     testCompile group: 'org.testng', name: 'testng', version: '7.1.0'
-
 }
 
 test {
