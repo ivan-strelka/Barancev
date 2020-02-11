@@ -40,6 +40,4 @@ gen/
 .navigation
 captures/
 output.json
-/build.gradle
-
 /settings.gradle
