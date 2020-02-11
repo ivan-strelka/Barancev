@@ -41,5 +41,5 @@ gen/
 captures/
 output.json
 /build.gradle
-*.gradle
+
 /settings.gradle
