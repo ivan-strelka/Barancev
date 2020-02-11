@@ -23,6 +23,7 @@
 *.ap_
 *.dex
 
+
 # Project gen files
 /build/
 bin/
