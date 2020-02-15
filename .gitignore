@@ -42,3 +42,5 @@ gen/
 captures/
 output.json
 /settings.gradle
+/Addressbook/build/
+/Sandbox/build/
