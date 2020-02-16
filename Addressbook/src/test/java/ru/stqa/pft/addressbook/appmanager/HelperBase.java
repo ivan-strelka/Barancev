@@ -20,6 +20,10 @@ public class HelperBase {
         wd.findElement(locator).click();
     }
 
+    protected void clearField(By locator) {
+        wd.findElement(locator).clear();
+    }
+
 
     public boolean isElementPresent(By by) {
         try {

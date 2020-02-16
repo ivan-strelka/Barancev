@@ -3,14 +3,13 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.tests.TestBase;
 
-public class ContactHelper {
+public class ContactHelper extends HelperBase {
 
-    private ChromeDriver wd;
 
     public ContactHelper(ChromeDriver wd) {
-        this.wd = wd;
-
+        super(wd);
     }
 
     public void submitContactCreation() {
@@ -31,6 +30,23 @@ public class ContactHelper {
 
     public void submitDeleteContact() {
         wd.findElement(By.xpath("//input[@value='Delete']")).click();
+    }
+
+
+    public void initContactModification() {
+        click(By.xpath("//img[@alt='Edit']"));
+    }
+
+    public void submitContcactModification() {
+        click(By.xpath("(//input[@name='update'])[2]"));
+    }
+
+    public void clearAnyFieldInputInContactForm(String locator) {
+        clearField(By.xpath("//input[@name='" + locator + "']"));
+    }
+
+    public void clearAnyFieldTextAreaInContactForm(String locator) {
+        clearField(By.xpath("//textarea[@name='" + locator + "']"));
     }
 
 
