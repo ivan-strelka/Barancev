@@ -1,13 +1,14 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import ru.stqa.pft.addressbook.model.GroupDate;
 
 public class GroupHelper extends HelperBase {
 
 
-    public GroupHelper(ChromeDriver wd) {
+    public GroupHelper(WebDriver wd) {
         super(wd);
     }
 
