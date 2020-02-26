@@ -10,12 +10,11 @@ public class ContactCreationTest extends TestBase {
     public void testCreationContact() {
 
         app.getNavigationHelper().goToContactPage();
-        app.getContactHelper().fillContactForm(new ContactData("Fuller",
+        app.getContactHelper().createContact(new ContactData("Fuller",
                 "Brad",
                 "lazinywiqa@mailinator.com",
                 "Consectetur lorem re",
-                "aaa"), true);
-        app.getContactHelper().submitContactCreation();
+                "zzz"), true);
         app.getNavigationHelper().goToHomePage();
     }
 
