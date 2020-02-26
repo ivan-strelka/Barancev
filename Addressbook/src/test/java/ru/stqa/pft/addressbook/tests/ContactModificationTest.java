@@ -12,7 +12,8 @@ public class ContactModificationTest extends TestBase {
                 "Martin11111",
                 "Luter22222",
                 "martin@mailinator.com22222",
-                "Life forever33333"));
+                "Life forever33333",
+                null), false);
         app.getContactHelper().submitContcactModification();
         app.getNavigationHelper().goToHomePage();
 

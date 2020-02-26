@@ -13,7 +13,8 @@ public class ContactCreationTest extends TestBase {
         app.getContactHelper().fillContactForm(new ContactData("Fuller",
                 "Brad",
                 "lazinywiqa@mailinator.com",
-                "Consectetur lorem re"));
+                "Consectetur lorem re",
+                "aaa"), true);
         app.getContactHelper().submitContactCreation();
         app.getNavigationHelper().goToHomePage();
     }
