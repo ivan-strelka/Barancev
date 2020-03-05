@@ -4,12 +4,14 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 
+import java.util.List;
+
 public class DeletedContactTest extends TestBase {
 
 
     @Test
     public void testDeleteContact() {
-        int before = app.getContactHelper().getContactCount();
+        List<ContactData> before = app.getContactHelper().getContactList();
         if (!app.getContactHelper().isThereAContact()) {
             app.getNavigationHelper().goToContactPage();
             app.getContactHelper().createContact(new ContactData("Fuller",
@@ -23,10 +25,8 @@ public class DeletedContactTest extends TestBase {
         app.isAlertPresentAccept();
         app.getNavigationHelper().goToGroupPage(); // нужен для обновления страницы, иначе падает
         app.getNavigationHelper().goToHomePage();
-        int after = app.getContactHelper().getContactCount();
-        System.out.println("after is " + after);
-        System.out.println("before is " + before);
-        Assert.assertEquals(after, before - 1);
+        List<ContactData> after = app.getContactHelper().getContactList();
+        Assert.assertEquals(after.size(), before.size() - 1);
 
 
     }
