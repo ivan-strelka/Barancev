@@ -18,7 +18,7 @@ public class DeletedContactTest extends TestBase {
                     "Consectetur lorem re",
                     "zzz"), true);
         }
-        app.getContactHelper().chooseContact();
+        app.getContactHelper().chooseContact(0);
         app.getContactHelper().submitDeleteContact();
         app.isAlertPresentAccept();
         app.getNavigationHelper().goToGroupPage(); // нужен для обновления страницы, иначе падает

@@ -31,8 +31,8 @@ public class ContactHelper extends HelperBase {
 
     }
 
-    public void chooseContact() {
-        wd.findElement(By.xpath("(//input[@name='selected[]'])[1]")).click();
+    public void chooseContact(int index) {
+        wd.findElements(By.xpath("(//input[@name='selected[]'])")).get(index).click();
     }
 
     public void submitDeleteContact() {
