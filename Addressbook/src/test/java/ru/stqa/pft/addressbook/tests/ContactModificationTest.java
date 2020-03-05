@@ -18,7 +18,7 @@ public class ContactModificationTest extends TestBase {
                     "zzz"), true);
         }
         app.getNavigationHelper().goToHomePage();
-        app.getContactHelper().initContactModification();
+        app.getContactHelper().initContactModification(before - 1);
         app.getContactHelper().fillContactForm(new ContactData(
                 "Martin11111",
                 "Luter22222",
