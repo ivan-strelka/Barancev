@@ -25,10 +25,10 @@ public class ContactModificationTest extends TestBase {
         app.getContactHelper().initContactModification(before.size() - 1);
         ContactData contactData = new ContactData(
                 before.get(before.size() - 1).getId(),
-                "Fuller1",
-                null,
-                null,
-                null,
+                "Fuller2",
+                "Brad",
+                "lazinywiqa@mailinator.com",
+                "Consectetur lorem re",
                 "aaa");
         app.getContactHelper().fillContactForm(contactData, false);
         app.getContactHelper().submitContcactModification();
