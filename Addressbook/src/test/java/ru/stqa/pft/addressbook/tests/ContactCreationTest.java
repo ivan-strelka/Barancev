@@ -17,7 +17,7 @@ public class ContactCreationTest extends TestBase {
                 "Brad",
                 "lazinywiqa@mailinator.com",
                 "Consectetur lorem re",
-                "zzz"), true);
+                "aaa"), true);
         app.getNavigationHelper().goToHomePage();
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size() + 1);

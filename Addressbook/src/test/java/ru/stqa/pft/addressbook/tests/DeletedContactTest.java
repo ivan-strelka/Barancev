@@ -18,7 +18,7 @@ public class DeletedContactTest extends TestBase {
                     "Brad",
                     "lazinywiqa@mailinator.com",
                     "Consectetur lorem re",
-                    "zzz"), true);
+                    "aaa"), true);
         }
         app.getContactHelper().chooseContact(0);
         app.getContactHelper().submitDeleteContact();
@@ -27,6 +27,12 @@ public class DeletedContactTest extends TestBase {
         app.getNavigationHelper().goToHomePage();
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size() - 1);
+        System.out.println("AFTER IS " + after.size());
+        System.out.println("BEFORE IS " + before.size());
+        before.remove(before.size() - 1);
+        System.out.println("AFTER IS " + after.size());
+        System.out.println("BEFORE IS " + before.size());
+        Assert.assertEquals(before, after);
 
 
     }

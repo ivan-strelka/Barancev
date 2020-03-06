@@ -11,7 +11,6 @@ public class DeletedGroupTest extends TestBase {
     @Test
     public void testDeletGroup() {
         app.getNavigationHelper().goToGroupPage();
-
         if (!app.getGroupHelper().isThereAGroup()) {
             app.getGroupHelper().createGroup(new GroupDate("aaa", "bbb", "ccc"));
         }
@@ -21,6 +20,9 @@ public class DeletedGroupTest extends TestBase {
         app.getGroupHelper().returnToGroupPage();
         List<GroupDate> after = app.getGroupHelper().getGroupList();
         Assert.assertEquals(after.size(), before.size() - 1);
+        before.remove(before.size() - 1);
+        Assert.assertEquals(before, after);
+
     }
 
 
