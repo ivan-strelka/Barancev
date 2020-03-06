@@ -57,10 +57,12 @@ public class ContactData {
         return id;
     }
 
+
     @Override
     public String toString() {
         return "ContactData{" +
                 "id='" + id + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 
@@ -70,11 +72,12 @@ public class ContactData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactData that = (ContactData) o;
-        return Objects.equals(id, that.id);
+        return Objects.equals(id, that.id) &&
+                Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(id, email);
     }
 }

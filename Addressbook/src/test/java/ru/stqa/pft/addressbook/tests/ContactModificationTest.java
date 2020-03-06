@@ -27,7 +27,7 @@ public class ContactModificationTest extends TestBase {
                 before.get(before.size() - 1).getId(),
                 "Fuller2",
                 "Brad",
-                "lazinywiqa@mailinator.com",
+                "lazinywiqa@mailinator.com2",
                 "Consectetur lorem re",
                 "aaa");
         app.getContactHelper().fillContactForm(contactData, false);
@@ -38,6 +38,7 @@ public class ContactModificationTest extends TestBase {
 
         before.remove(before.size() - 1);
         before.add(contactData);
+        System.out.println("!!!!!!!");
         Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
 
 
