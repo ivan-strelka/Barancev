@@ -26,9 +26,9 @@ public class ContactModificationTest extends TestBase {
         ContactData contactData = new ContactData(
                 before.get(before.size() - 1).getId(),
                 "Fuller1",
-                "Brad",
-                "lazinywiqa@mailinator.com",
-                "Consectetur lorem re",
+                null,
+                null,
+                null,
                 "aaa");
         app.getContactHelper().fillContactForm(contactData, false);
         app.getContactHelper().submitContcactModification();
