@@ -5,7 +5,6 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupDate;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class GroupCreationTest extends TestBase {
@@ -21,7 +20,10 @@ public class GroupCreationTest extends TestBase {
 
         group.setId(after.stream().max(Comparator.comparingInt(o -> o.getId())).get().getId());
         before.add(group);
-        Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
+        Comparator<? super GroupDate> byId = Comparator.comparingInt(GroupDate::getId);
+        before.sort(byId);
+        after.sort(byId);
+        Assert.assertEquals(before, after);
 
 
     }
