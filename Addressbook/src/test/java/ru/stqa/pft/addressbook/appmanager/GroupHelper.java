@@ -70,8 +70,8 @@ public class GroupHelper extends HelperBase {
         List<WebElement> elements = wd.findElements(By.xpath("//span[@class='group']"));
         for (WebElement element : elements) {
             String name = element.getText();
-            String id = element.findElement(By.tagName("input")).getAttribute("value");
-            GroupDate group = new GroupDate(name, null, null);
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            GroupDate group = new GroupDate(id, name, null, null);
             groups.add(group);
         }
 
