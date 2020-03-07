@@ -62,20 +62,25 @@ public class ContactData {
         return "ContactData{" +
                 "id='" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 '}';
     }
+
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ContactData that = (ContactData) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(firstName, that.firstName);
+        return id.equals(that.id) &&
+                firstName.equals(that.firstName) &&
+                lastName.equals(that.lastName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName);
+        return Objects.hash(id, firstName, lastName);
     }
+
+
 }

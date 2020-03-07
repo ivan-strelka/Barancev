@@ -26,7 +26,7 @@ public class ContactModificationTest extends TestBase {
         ContactData contactData = new ContactData(
                 before.get(before.size() - 1).getId(),
                 "Fuller2",
-                "Brad",
+                "Brad2",
                 "lazinywiqa@mailinator.com2",
                 "Consectetur lorem re",
                 "aaa");
@@ -38,7 +38,7 @@ public class ContactModificationTest extends TestBase {
 
         before.remove(before.size() - 1);
         before.add(contactData);
-
+        System.out.println("!!!!!!!!!!!!!!!!!!!!");
         Assert.assertEquals(new HashSet<Object>(before), new HashSet<Object>(after));
 
 
