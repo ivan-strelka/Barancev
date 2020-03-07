@@ -57,15 +57,13 @@ public class ContactData {
         return id;
     }
 
-
     @Override
     public String toString() {
         return "ContactData{" +
                 "id='" + id + '\'' +
-                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
                 '}';
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -73,11 +71,11 @@ public class ContactData {
         if (o == null || getClass() != o.getClass()) return false;
         ContactData that = (ContactData) o;
         return Objects.equals(id, that.id) &&
-                Objects.equals(email, that.email);
+                Objects.equals(firstName, that.firstName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, email);
+        return Objects.hash(id, firstName);
     }
 }
