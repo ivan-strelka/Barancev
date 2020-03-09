@@ -57,6 +57,14 @@ public class GroupHelper extends HelperBase {
 
     }
 
+    public void modifyGroup(int index, GroupDate groupDate) {
+        selectGroup(index);
+        initGroupModification();
+        fillGroupForm(groupDate);
+        submitGroupModification();
+        returnToGroupPage();
+    }
+
     public boolean isThereAGroup() {
         return isElementPresent(By.name("selected[]"));
     }

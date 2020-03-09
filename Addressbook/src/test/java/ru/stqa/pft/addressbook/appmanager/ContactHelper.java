@@ -79,7 +79,12 @@ public class ContactHelper extends HelperBase {
         }
 
         return contacts;
+    }
 
 
+    public void modifyContact(int index, ContactData contactData) {
+        initContactModification(index);
+        fillContactForm(contactData, false);
+        submitContcactModification();
     }
 }

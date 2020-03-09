@@ -1,6 +1,7 @@
 package ru.stqa.pft.addressbook.tests;
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 
@@ -9,9 +10,8 @@ import java.util.List;
 
 public class ContactModificationTest extends TestBase {
 
-    @Test
-    public void testModificationContact() {
-        List<ContactData> before = app.getContactHelper().getContactList();
+    @BeforeMethod
+    public void ensurePreconditions() {
         if (!app.getContactHelper().isThereAContact()) {
             app.getNavigationHelper().goToContactPage();
             app.getContactHelper().createContact(new ContactData(
@@ -21,22 +21,26 @@ public class ContactModificationTest extends TestBase {
                     "Consectetur lorem re",
                     "aaa"), true);
         }
-        app.getNavigationHelper().goToHomePage();
-        app.getContactHelper().initContactModification(before.size() - 1);
+    }
+
+    @Test
+    public void testModificationContact() {
+        List<ContactData> before = app.getContactHelper().getContactList();
+        int index = before.size() - 1;
         ContactData contactData = new ContactData(
-                before.get(before.size() - 1).getId(),
+                before.get(index).getId(),
                 "Fuller2",
                 "Brad2",
                 "lazinywiqa@mailinator.com2",
                 "Consectetur lorem re",
                 "aaa");
-        app.getContactHelper().fillContactForm(contactData, false);
-        app.getContactHelper().submitContcactModification();
+        app.getNavigationHelper().goToHomePage();
+        app.getContactHelper().modifyContact(index, contactData);
         app.getNavigationHelper().goToHomePage();
         List<ContactData> after = app.getContactHelper().getContactList();
         Assert.assertEquals(after.size(), before.size());
 
-        before.remove(before.size() - 1);
+        before.remove(index);
         before.add(contactData);
         Comparator<? super ContactData> byId = Comparator.comparingInt(ContactData::getId);
         before.sort(byId);
@@ -45,4 +49,6 @@ public class ContactModificationTest extends TestBase {
 
 
     }
+
+
 }
