@@ -11,11 +11,11 @@ public class GroupCreationTest extends TestBase {
 
     @Test
     public void testGroupCreation() {
-        app.getNavigationHelper().goToGroupPage();
-        List<GroupDate> before = app.getGroupHelper().getGroupList();
+        app.goTo().GroupPage();
+        List<GroupDate> before = app.group().list();
         GroupDate group = new GroupDate("aaa1", "bbb", "ccc");
-        app.getGroupHelper().createGroup(group);
-        List<GroupDate> after = app.getGroupHelper().getGroupList();
+        app.group().createGroup(group);
+        List<GroupDate> after = app.group().list();
         Assert.assertEquals(after.size(), before.size() + 1);
 
         group.setId(after.stream().max(Comparator.comparingInt(o -> o.getId())).get().getId());
