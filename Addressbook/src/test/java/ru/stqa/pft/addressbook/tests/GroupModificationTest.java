@@ -5,15 +5,14 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupDate;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.Set;
 
 public class GroupModificationTest extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
         app.goTo().GroupPage();
-        if (app.group().list().size() == 0) {
+        if (app.group().all().size() == 0) {
             app.group().createGroup(new GroupDate().withName("aaa").withHeader("bbb").withFooter("ccc"));
         }
     }
@@ -21,22 +20,19 @@ public class GroupModificationTest extends TestBase {
     @Test
     public void testModificationGroup() {
 
-        List<GroupDate> before = app.group().list();
-        int index = before.size() - 1;
+        Set<GroupDate> before = app.group().all();
+        GroupDate modifyGroup = before.iterator().next();
         GroupDate groupDate = new GroupDate()
-                .withId(before.get(index).getId())
+                .withId(modifyGroup.getId())
                 .withName("d")
                 .withHeader("d")
                 .withFooter("d");
-        app.group().modify(index, groupDate);
-        List<GroupDate> after = app.group().list();
+        app.group().modify(groupDate);
+        Set<GroupDate> after = app.group().all();
         Assert.assertEquals(after.size(), before.size());
 
-        before.remove(index);
+        before.remove(modifyGroup);
         before.add(groupDate);
-        Comparator<? super GroupDate> byId = Comparator.comparingInt(GroupDate::getId);
-        before.sort(byId);
-        after.sort(byId);
         Assert.assertEquals(before, after);
     }
 

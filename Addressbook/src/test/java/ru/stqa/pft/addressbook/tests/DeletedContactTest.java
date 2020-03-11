@@ -5,13 +5,13 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 
-import java.util.List;
+import java.util.Set;
 
 public class DeletedContactTest extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        if (app.goToCont().list().size() == 0) {
+        if (app.goToCont().all().size() == 0) {
             app.goTo().ContactPage();
             app.goToCont().create(new ContactData().withFirstName("Fuller")
                     .withLastName("Brad2")
@@ -23,15 +23,16 @@ public class DeletedContactTest extends TestBase {
 
     @Test
     public void testDeleteContact() {
-        List<ContactData> before = app.goToCont().list();
-        int index = before.size() - 1;
-        app.goToCont().delete(index);
+        Set<ContactData> before = app.goToCont().all();
+        ContactData deletedContact = before.iterator().next();
+        app.goToCont().delete(deletedContact);
         app.isAlertPresentAccept();
         app.goTo().GroupPage();
         app.goTo().goToHomePage();
-        List<ContactData> after = app.goToCont().list();
+        Set<ContactData> after = app.goToCont().all();
         Assert.assertEquals(after.size(), before.size() - 1);
-        before.remove(index);
+
+        before.remove(deletedContact);
         Assert.assertEquals(before, after);
     }
 
