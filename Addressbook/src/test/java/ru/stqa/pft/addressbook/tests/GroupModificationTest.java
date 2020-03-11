@@ -4,8 +4,10 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupDate;
+import ru.stqa.pft.addressbook.model.Groups;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupModificationTest extends TestBase {
 
@@ -20,7 +22,7 @@ public class GroupModificationTest extends TestBase {
     @Test
     public void testModificationGroup() {
 
-        Set<GroupDate> before = app.group().all();
+        Groups before = app.group().all();
         GroupDate modifyGroup = before.iterator().next();
         GroupDate groupDate = new GroupDate()
                 .withId(modifyGroup.getId())
@@ -28,12 +30,10 @@ public class GroupModificationTest extends TestBase {
                 .withHeader("d")
                 .withFooter("d");
         app.group().modify(groupDate);
-        Set<GroupDate> after = app.group().all();
+        Groups after = app.group().all();
         Assert.assertEquals(after.size(), before.size());
 
-        before.remove(modifyGroup);
-        before.add(groupDate);
-        Assert.assertEquals(before, after);
+        assertThat(after, equalTo(before.withOut(modifyGroup).withAdded(groupDate)));
     }
 
 

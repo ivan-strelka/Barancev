@@ -1,33 +1,31 @@
 package ru.stqa.pft.addressbook.tests;
 
-
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
+import ru.stqa.pft.addressbook.model.Contacts;
 
-import java.util.Set;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTest extends TestBase {
 
     @Test
     public void testCreationContact() {
-        Set<ContactData> before = app.goToCont().all();
+        Contacts before = app.goToCont().all();
         app.goTo().ContactPage();
-        ContactData contactData = new ContactData().withFirstName("Fuller")
+        ContactData contact = new ContactData().withFirstName("Fuller")
                 .withLastName("Brad2")
                 .withEmail("lazinywiqa@mailinator.com")
                 .withAddress("Consectetur lorem re")
                 .withGroup("aaa");
-        app.goToCont().create(contactData, true);
+        app.goToCont().create(contact, true);
         app.goTo().goToHomePage();
-        Set<ContactData> after = app.goToCont().all();
-        Assert.assertEquals(after.size(), before.size() + 1);
+        Contacts after = app.goToCont().all();
+        assertThat(after.size(), equalTo(before.size() + 1));
 
-        contactData.withId(after.stream().mapToInt((c) -> c.getId()).max().getAsInt());
-        before.add(contactData);
-        Assert.assertEquals(before, after);
+        assertThat(after, equalTo(before.withAdded(contact.withId(after
+                .stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
 
     }
-
 
 }
