@@ -13,15 +13,13 @@ public class DeletedContactTest extends TestBase {
     public void ensurePreconditions() {
         if (app.goToCont().list().size() == 0) {
             app.goTo().ContactPage();
-            app.goToCont().create(new ContactData(
-                    "Fuller",
-                    "Brad",
-                    "lazinywiqa@mailinator.com",
-                    "Consectetur lorem re",
-                    "aaa"), true);
+            app.goToCont().create(new ContactData().withFirstName("Fuller")
+                    .withLastName("Brad2")
+                    .withEmail("lazinywiqa@mailinator.com")
+                    .withAddress("Consectetur lorem re")
+                    .withGroup("aaa"), true);
         }
     }
-
 
     @Test
     public void testDeleteContact() {
@@ -36,8 +34,6 @@ public class DeletedContactTest extends TestBase {
         before.remove(index);
         Assert.assertEquals(before, after);
     }
-
-
 
 
 }

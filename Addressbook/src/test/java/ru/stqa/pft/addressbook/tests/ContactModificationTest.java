@@ -14,12 +14,11 @@ public class ContactModificationTest extends TestBase {
     public void ensurePreconditions() {
         if (app.goToCont().list().size() == 0) {
             app.goTo().ContactPage();
-            app.goToCont().create(new ContactData(
-                    "Fuller",
-                    "Brad",
-                    "lazinywiqa@mailinator.com",
-                    "Consectetur lorem re",
-                    "aaa"), true);
+            app.goToCont().create(new ContactData().withFirstName("Fuller")
+                    .withLastName("Brad2")
+                    .withEmail("lazinywiqa@mailinator.com")
+                    .withAddress("Consectetur lorem re")
+                    .withGroup("aaa"), true);
         }
     }
 
@@ -27,13 +26,12 @@ public class ContactModificationTest extends TestBase {
     public void testModificationContact() {
         List<ContactData> before = app.goToCont().list();
         int index = before.size() - 1;
-        ContactData contactData = new ContactData(
-                before.get(index).getId(),
-                "Fuller2",
-                "Brad2",
-                "lazinywiqa@mailinator.com2",
-                "Consectetur lorem re",
-                "aaa");
+        ContactData contactData = new ContactData().withId(before.get(index).getId())
+                .withFirstName("Fuller2")
+                .withLastName("Brad2")
+                .withEmail("lazinywiqa@mailinator.com")
+                .withAddress("Consectetur lorem re")
+                .withGroup("aaa");
         app.goTo().goToHomePage();
         app.goToCont().modify(index, contactData);
         app.goTo().goToHomePage();
