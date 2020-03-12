@@ -54,10 +54,7 @@ public class ContactHelper extends HelperBase {
     }
 
 
-    public void create(ContactData contact, boolean creation) {
-        fillContactForm(contact, creation);
-        submitContactCreation();
-    }
+    private Contacts contactCache = null;
 
     public boolean isThereAContact() {
         return isElementPresent(By.xpath("(//input[@name='selected[]'])[1]"));
@@ -67,21 +64,31 @@ public class ContactHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
+    public void create(ContactData contact, boolean creation) {
+        fillContactForm(contact, creation);
+        submitContactCreation();
+        contactCache = null;
+    }
+
     public Contacts all() {
-        Contacts contacts = new Contacts();
+        if (contactCache != null) {
+            return new Contacts(contactCache);
+        }
+
+        contactCache = new Contacts();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element : elements) {
             List<WebElement> cells = element.findElements(By.tagName("td"));
             String firstName = cells.get(2).getText();
             String lastName = cells.get(1).getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            contacts.add(new ContactData()
+            contactCache.add(new ContactData()
                     .withId(id)
                     .withFirstName(firstName)
                     .withLastName(lastName));
         }
 
-        return contacts;
+        return new Contacts(contactCache);
     }
 
 
@@ -89,11 +96,13 @@ public class ContactHelper extends HelperBase {
         editContactById(contactData.getId());
         fillContactForm(contactData, false);
         submitContcactModification();
+        contactCache = null;
     }
 
     public void delete(ContactData deletedContact) {
         chooseContactById(deletedContact.getId());
         submitDeleteContact();
+        contactCache = null;
     }
 
 
