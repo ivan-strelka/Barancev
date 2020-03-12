@@ -1,6 +1,5 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupDate;
@@ -25,8 +24,8 @@ public class DeletedGroupTest extends TestBase {
         Groups before = app.group().all();
         GroupDate deletedGroup = before.iterator().next();
         app.group().delete(deletedGroup);
+        assertThat(app.group().Count(), equalTo(before.size() - 1));
         Groups after = app.group().all();
-        Assert.assertEquals(after.size(), before.size() - 1);
 
         assertThat(after, equalTo(before.withOut(deletedGroup)));
 

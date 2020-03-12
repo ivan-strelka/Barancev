@@ -20,11 +20,31 @@ public class ContactCreationTest extends TestBase {
                 .withGroup("aaa");
         app.goToCont().create(contact, true);
         app.goTo().goToHomePage();
+        assertThat(app.goToCont().Count(), equalTo(before.size() + 1));
         Contacts after = app.goToCont().all();
-        assertThat(after.size(), equalTo(before.size() + 1));
+
 
         assertThat(after, equalTo(before.withAdded(contact.withId(after
                 .stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
+
+    }
+
+
+    @Test
+    public void testBadCreationContact() {
+        Contacts before = app.goToCont().all();
+        app.goTo().ContactPage();
+        ContactData contact = new ContactData().withFirstName("'")
+                .withLastName("")
+                .withEmail("")
+                .withAddress("")
+                .withGroup("aaa");
+        app.goToCont().create(contact, true);
+        app.goTo().goToHomePage();
+        assertThat(app.goToCont().Count(), equalTo(before.size()));
+        Contacts after = app.goToCont().all();
+
+        assertThat(after, equalTo(before));
 
     }
 

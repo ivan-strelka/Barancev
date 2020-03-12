@@ -60,7 +60,7 @@ public class ContactHelper extends HelperBase {
         return isElementPresent(By.xpath("(//input[@name='selected[]'])[1]"));
     }
 
-    public int getContactCount() {
+    public int Count() {
         return wd.findElements(By.name("selected[]")).size();
     }
 
