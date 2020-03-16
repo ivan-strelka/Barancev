@@ -27,6 +27,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("email"), contactData.getEmail());
         type(By.name("address"), contactData.getAddress());
 
+
         if (creation) {
             new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
         } else {
@@ -82,12 +83,16 @@ public class ContactHelper extends HelperBase {
             String firstName = cells.get(2).getText();
             String lastName = cells.get(1).getText();
             String allPhones = cells.get(5).getText();
+            String address = cells.get(3).getText();
+            String allEmail = cells.get(4).getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             contactCache.add(new ContactData()
                     .withId(id)
                     .withFirstName(firstName)
                     .withLastName(lastName)
-                    .withAllPhone(allPhones));
+                    .withAllPhone(allPhones)
+                    .withAddress(address)
+                    .setAllEmail(allEmail));
         }
 
         return new Contacts(contactCache);
@@ -115,12 +120,20 @@ public class ContactHelper extends HelperBase {
         String home = wd.findElement(By.name("home")).getAttribute("value");
         String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
         String work = wd.findElement(By.name("work")).getAttribute("value");
+        String email = wd.findElement(By.name("email")).getAttribute("value");
+        String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+        String email3 = wd.findElement(By.name("email3")).getAttribute("value");
+        String address = wd.findElement(By.cssSelector("textarea[name = 'address']")).getText();
         wd.navigate().back();
 
         return new ContactData().withId(contactData.getId()).withFirstName(firstname).withLastName(lastname)
                 .withHomePhone(home)
                 .withMobilePhone(mobile)
-                .withWorkPhone(work);
+                .withWorkPhone(work)
+                .withEmail(email)
+                .withEmail3(email2)
+                .withEmail3(email3)
+                .withAddress(address);
     }
 
 
