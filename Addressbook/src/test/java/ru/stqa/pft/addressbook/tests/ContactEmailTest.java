@@ -41,7 +41,7 @@ public class ContactEmailTest extends TestBase {
         return Arrays.asList(contact.getEmail(), contact.getEmail2(), contact.getEmail3())
                 .stream().filter((s) -> !equals(""))
                 .map(ContactEmailTest::cleaned)
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining());
 
     }
 
