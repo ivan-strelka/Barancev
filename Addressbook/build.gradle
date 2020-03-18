@@ -10,7 +10,7 @@ repositories {
     mavenCentral()
 }
 
-dependencies{
+dependencies {
     testCompile group: 'org.testng', name: 'testng', version: '7.1.0'
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
@@ -18,8 +18,8 @@ dependencies{
     testCompile group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
     // https://mvnrepository.com/artifact/com.beust/jcommander
     compile group: 'com.beust', name: 'jcommander', version: '1.78'
-
-
+    // https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream
+    compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.11.1'
 
 }
 
