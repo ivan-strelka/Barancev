@@ -34,13 +34,14 @@ public class GroupDataGenerator {
             jCommander.parse(args);
         } catch (ParameterException ex) {
             jCommander.usage();
+            return;
         }
         generator.run();
 
 
     }
 
-    private static void saveAsCSV(List<GroupData> groups, File file) throws IOException {
+    private void saveAsCSV(List<GroupData> groups, File file) throws IOException {
         Writer writer = new FileWriter(file);
         for (GroupData group : groups) {
             writer.write(String.format("%s;%s;%s\n", group.getName(), group.getHeader(), group.getFooter()));
@@ -61,8 +62,6 @@ public class GroupDataGenerator {
         } else {
             System.out.println("Wrong Format!!");
         }
-
-
     }
 
     private void saveAsJSON(List<GroupData> groups, File file) throws IOException {
@@ -85,7 +84,7 @@ public class GroupDataGenerator {
 
     }
 
-    private static List<GroupData> generateGroups(int count) {
+    private List<GroupData> generateGroups(int count) {
         List<GroupData> groups = new ArrayList<GroupData>();
         for (int i = 0; i < count; i++) {
             groups.add(new GroupData().withName(String.format("test %s", i))
