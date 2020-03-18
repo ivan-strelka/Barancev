@@ -1,7 +1,7 @@
 package ru.stqa.pft.addressbook.tests;
 
 import org.testng.annotations.Test;
-import ru.stqa.pft.addressbook.model.GroupDate;
+import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -13,7 +13,7 @@ public class GroupCreationTest extends TestBase {
     public void testGroupCreation() {
         app.goTo().GroupPage();
         Groups before = app.group().all();
-        GroupDate group = new GroupDate().withName("aaa");
+        GroupData group = new GroupData().withName("aaa");
         app.group().createGroup(group);
         assertThat(app.group().Count(), equalTo(before.size() + 1));
         Groups after = app.group().all();
@@ -30,7 +30,7 @@ public class GroupCreationTest extends TestBase {
     public void testBadGroupCreation() {
         app.goTo().GroupPage();
         Groups before = app.group().all();
-        GroupDate group = new GroupDate().withName("'");
+        GroupData group = new GroupData().withName("'");
         app.group().createGroup(group);
         assertThat(app.group().Count(), equalTo(before.size()));
         Groups after = app.group().all();

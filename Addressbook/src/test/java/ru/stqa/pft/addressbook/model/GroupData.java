@@ -2,7 +2,7 @@ package ru.stqa.pft.addressbook.model;
 
 import java.util.Objects;
 
-public class GroupDate {
+public class GroupData {
     private int id = Integer.MAX_VALUE;
     private String name;
     private String header;
@@ -12,22 +12,22 @@ public class GroupDate {
         return id;
     }
 
-    public GroupDate withId(int id) {
+    public GroupData withId(int id) {
         this.id = id;
         return this;
     }
 
-    public GroupDate withName(String name) {
+    public GroupData withName(String name) {
         this.name = name;
         return this;
     }
 
-    public GroupDate withHeader(String header) {
+    public GroupData withHeader(String header) {
         this.header = header;
         return this;
     }
 
-    public GroupDate withFooter(String footer) {
+    public GroupData withFooter(String footer) {
         this.footer = footer;
         return this;
     }
@@ -50,7 +50,7 @@ public class GroupDate {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GroupDate groupDate = (GroupDate) o;
+        GroupData groupDate = (GroupData) o;
         return id == groupDate.id &&
                 Objects.equals(name, groupDate.name);
     }
