@@ -5,7 +5,9 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,9 +21,13 @@ public class ContactCreationTest extends TestBase {
     @DataProvider
     public Iterator<Object[]> validContact() throws IOException {
         List<Object[]> list = new ArrayList<Object[]>();
-        list.add(new Object[]{new ContactData().withFirstName("firstName 1").withLastName("lastName 1").withGroup("aaa")});
-        list.add(new Object[]{new ContactData().withFirstName("firstName 2").withLastName("lastName 2").withGroup("aaa")});
-        list.add(new Object[]{new ContactData().withFirstName("firstName 3").withLastName("lastName 3").withGroup("aaa")});
+        BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/contacts.csv"));
+        String line = reader.readLine();
+        while (line != null) {
+            String[] split = line.split(";");
+            list.add(new Object[]{new ContactData().withFirstName(split[0]).withLastName(split[1]).withGroup(split[2])});
+            line = reader.readLine();
+        }
         return list.iterator();
     }
 
@@ -35,7 +41,6 @@ public class ContactCreationTest extends TestBase {
         app.goTo().goToHomePage();
         assertThat(app.goToCont().Count(), equalTo(before.size() + 1));
         Contacts after = app.goToCont().all();
-
 
         assertThat(after, equalTo(before.withAdded(contact.withId(after
                 .stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
