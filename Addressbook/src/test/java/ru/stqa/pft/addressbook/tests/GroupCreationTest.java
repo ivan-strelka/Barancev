@@ -76,7 +76,7 @@ public class GroupCreationTest extends TestBase {
     public void testBadGroupCreation() {
         app.goTo().GroupPage();
         Groups before = app.group().all();
-        GroupData group = new GroupData().withName("'");
+        GroupData group = new GroupData().withName(properties.getProperty("web.BadgroupName"));
         app.group().createGroup(group);
         assertThat(app.group().Count(), equalTo(before.size()));
         Groups after = app.group().all();

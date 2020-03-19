@@ -16,11 +16,11 @@ public class ContactAddressTest extends TestBase {
     public void ensurePreconditions() {
         if (app.goToCont().all().size() == 0) {
             app.goTo().ContactPage();
-            app.goToCont().create(new ContactData().withFirstName("Fuller")
-                    .withLastName("Brad2")
-                    .withEmail("lazinywiqa@mailinator.com")
-                    .withAddress("Consectetur lorem re")
-                    .withGroup("aaa"), true);
+            app.goToCont().create(new ContactData().withFirstName((properties.getProperty("web.firstName")))
+                    .withLastName(properties.getProperty("web.lastName"))
+                    .withEmail(properties.getProperty("web.email"))
+                    .withAddress(properties.getProperty("web.address"))
+                    .withGroup(properties.getProperty("web.group")), true);
         }
     }
 

@@ -15,7 +15,10 @@ public class DeletedGroupTest extends TestBase {
     public void ensurePreconditions() {
         app.goTo().GroupPage();
         if (app.group().all().size() == 0) {
-            app.group().createGroup(new GroupData().withName("aaa1").withHeader("bbb").withFooter("ccc"));
+            app.group().createGroup(new GroupData()
+                    .withName(properties.getProperty("web.groupName"))
+                    .withHeader(properties.getProperty("web.groupHeader"))
+                    .withFooter(properties.getProperty("web.groupFooter")));
         }
     }
 

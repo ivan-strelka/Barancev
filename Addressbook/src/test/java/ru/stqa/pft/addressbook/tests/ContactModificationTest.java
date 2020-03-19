@@ -6,6 +6,11 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -15,25 +20,27 @@ public class ContactModificationTest extends TestBase {
     public void ensurePreconditions() {
         if (app.goToCont().all().size() == 0) {
             app.goTo().ContactPage();
-            app.goToCont().create(new ContactData().withFirstName("Fuller")
-                    .withLastName("Brad2")
-                    .withEmail("lazinywiqa@mailinator.com")
-                    .withAddress("Consectetur lorem re")
-                    .withGroup("aaa"), true);
+            app.goToCont().create(new ContactData().withFirstName((properties.getProperty("web.firstName")))
+                    .withLastName(properties.getProperty("web.lastName"))
+                    .withEmail(properties.getProperty("web.email"))
+                    .withAddress(properties.getProperty("web.address"))
+                    .withGroup(properties.getProperty("web.group")), true);
         }
     }
 
     @Test
-    public void testModificationContact() {
+    public void testModificationContact() throws IOException {
+        properties = new Properties();
+        properties.load(new FileReader(new File(String.format("src/test/resources/local.properties"))));
         Contacts before = app.goToCont().all();
         ContactData modifyContact = before.iterator().next();
         ContactData contactData = new ContactData()
                 .withId(modifyContact.getId())
-                .withFirstName("Fuller2")
-                .withLastName("Brad2")
-                .withEmail("lazinywiqa@mailinator.com")
-                .withAddress("Consectetur lorem re")
-                .withGroup("aaa");
+                .withFirstName(properties.getProperty("web.firstName"))
+                .withLastName(properties.getProperty("web.lastName"))
+                .withEmail(properties.getProperty("web.email"))
+                .withAddress(properties.getProperty("web.address"))
+                .withGroup(properties.getProperty("web.group"));
         app.goTo().goToHomePage();
         app.goToCont().modify(contactData);
         app.goTo().goToHomePage();

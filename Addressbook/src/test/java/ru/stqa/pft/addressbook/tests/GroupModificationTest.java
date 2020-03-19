@@ -5,6 +5,11 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -19,15 +24,16 @@ public class GroupModificationTest extends TestBase {
     }
 
     @Test
-    public void testModificationGroup() {
-
+    public void testModificationGroup() throws IOException {
+        properties = new Properties();
+        properties.load(new FileReader(new File(String.format("src/test/resources/local.properties"))));
         Groups before = app.group().all();
         GroupData modifyGroup = before.iterator().next();
         GroupData groupDate = new GroupData()
                 .withId(modifyGroup.getId())
-                .withName("d")
-                .withHeader("d")
-                .withFooter("d");
+                .withName(properties.getProperty("web.groupNameMOD"))
+                .withHeader(properties.getProperty("web.groupHeaderMOD"))
+                .withFooter(properties.getProperty("web.groupFooterMOD"));
         app.group().modify(groupDate);
         assertThat(app.group().Count(), equalTo(before.size()));
         Groups after = app.group().all();

@@ -21,6 +21,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactCreationTest extends TestBase {
 
+
     @DataProvider
     public Iterator<Object[]> validContactFromXML() throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/contacts.xml"))) {
@@ -62,7 +63,7 @@ public class ContactCreationTest extends TestBase {
     public void testCreationContact(ContactData contact) {
         Contacts before = app.goToCont().all();
         app.goTo().ContactPage();
-        File photo = new File("src/test/resources/testPhoto.png");
+        File photo = new File(properties.getProperty("web.PhotoPath"));
         app.goToCont().create(contact, true);
         app.goTo().goToHomePage();
         assertThat(app.goToCont().Count(), equalTo(before.size() + 1));
@@ -78,11 +79,11 @@ public class ContactCreationTest extends TestBase {
     public void testBadCreationContact() {
         Contacts before = app.goToCont().all();
         app.goTo().ContactPage();
-        ContactData contact = new ContactData().withFirstName("'")
-                .withLastName("")
-                .withEmail("")
-                .withAddress("")
-                .withGroup("aaa");
+        ContactData contact = new ContactData().withFirstName(properties.getProperty("web.BadfirstName"))
+                .withLastName(properties.getProperty("web.lastName"))
+                .withEmail(properties.getProperty("web.email"))
+                .withAddress(properties.getProperty("web.address"))
+                .withGroup(properties.getProperty("web.group"));
         app.goToCont().create(contact, true);
         app.goTo().goToHomePage();
         assertThat(app.goToCont().Count(), equalTo(before.size()));
