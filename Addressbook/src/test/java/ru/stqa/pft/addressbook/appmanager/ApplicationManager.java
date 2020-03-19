@@ -22,10 +22,7 @@ public class ApplicationManager {
     private SessionHelper sessionHelper;
     private ContactHelper contactHelper;
 
-
     public void init() throws Exception {
-
-
         if (browser.equals(BrowserType.FIREFOX)) {
             System.setProperty("webdriver.gecko.driver", "utils/geckodriver-v0.26.0-linux64/geckodriver");
             wd = new FirefoxDriver();
@@ -57,7 +54,6 @@ public class ApplicationManager {
             return false;
         }
     }
-
 
     public GroupHelper group() {
         return groupHelper;
