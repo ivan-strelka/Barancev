@@ -21,6 +21,9 @@ dependencies {
     // https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream
     compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.11.1'
     implementation 'com.google.code.gson:gson:2.8.6'
+    // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+
 
 }
 
