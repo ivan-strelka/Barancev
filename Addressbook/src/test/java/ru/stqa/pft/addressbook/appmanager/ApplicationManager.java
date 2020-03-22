@@ -33,10 +33,10 @@ public class ApplicationManager {
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
 
         if (browser.equals(BrowserType.FIREFOX)) {
-            System.setProperty("webdriver.gecko.driver", "utils/geckodriver-v0.26.0-linux64/geckodriver");
+            System.setProperty("webdriver.gecko.driver", properties.getProperty("geckodriverPath"));
             wd = new FirefoxDriver();
         } else if (browser.equals(BrowserType.CHROME)) {
-            System.setProperty("webdriver.chrome.driver", "utils/chromedri/chromedriver");
+            System.setProperty("webdriver.chrome.driver", properties.getProperty("chromedriverPath"));
             wd = new ChromeDriver();
         } else {
             throw new Exception("Вы можете выбрать только CHROME или FIREFOX браузер");
