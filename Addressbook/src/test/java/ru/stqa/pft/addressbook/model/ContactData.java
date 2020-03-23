@@ -204,6 +204,7 @@ public class ContactData {
                 '}';
     }
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -218,4 +219,6 @@ public class ContactData {
     public int hashCode() {
         return Objects.hash(id, firstName, lastName);
     }
+
+
 }

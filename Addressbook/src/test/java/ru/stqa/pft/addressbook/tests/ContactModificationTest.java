@@ -18,7 +18,7 @@ public class ContactModificationTest extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        if (app.goToCont().all().size() == 0) {
+        if (app.db().contacts().size() == 0) {
             app.goTo().ContactPage();
             app.goToCont().create(new ContactData().withFirstName((properties.getProperty("web.firstName")))
                     .withLastName(properties.getProperty("web.lastName"))
@@ -32,7 +32,7 @@ public class ContactModificationTest extends TestBase {
     public void testModificationContact() throws IOException {
         properties = new Properties();
         properties.load(new FileReader(new File(String.format("src/test/resources/local.properties"))));
-        Contacts before = app.goToCont().all();
+        Contacts before = app.db().contacts();
         ContactData modifyContact = before.iterator().next();
         ContactData contactData = new ContactData()
                 .withId(modifyContact.getId())
@@ -45,8 +45,7 @@ public class ContactModificationTest extends TestBase {
         app.goToCont().modify(contactData);
         app.goTo().goToHomePage();
         assertThat(app.goToCont().Count(), equalTo(before.size()));
-        Contacts after = app.goToCont().all();
-
+        Contacts after = app.db().contacts();
 
         before.remove(modifyContact);
         before.add(contactData);

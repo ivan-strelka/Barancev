@@ -17,26 +17,28 @@ public class GroupModificationTest extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        app.goTo().GroupPage();
-        if (app.group().all().size() == 0) {
+        if (app.db().groups().size() == 0) {
+            app.goTo().GroupPage();
             app.group().createGroup(new GroupData().withName("aaa").withHeader("bbb").withFooter("ccc"));
         }
+
     }
 
     @Test
     public void testModificationGroup() throws IOException {
         properties = new Properties();
         properties.load(new FileReader(new File(String.format("src/test/resources/local.properties"))));
-        Groups before = app.group().all();
+        Groups before = app.db().groups();
         GroupData modifyGroup = before.iterator().next();
         GroupData groupDate = new GroupData()
                 .withId(modifyGroup.getId())
                 .withName(properties.getProperty("web.groupNameMOD"))
                 .withHeader(properties.getProperty("web.groupHeaderMOD"))
                 .withFooter(properties.getProperty("web.groupFooterMOD"));
+        app.goTo().GroupPage();
         app.group().modify(groupDate);
         assertThat(app.group().Count(), equalTo(before.size()));
-        Groups after = app.group().all();
+        Groups after = app.db().groups();
 
         assertThat(after, equalTo(before.withOut(modifyGroup).withAdded(groupDate)));
     }

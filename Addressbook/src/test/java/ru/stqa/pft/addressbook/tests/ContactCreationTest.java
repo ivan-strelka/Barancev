@@ -9,7 +9,6 @@ import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
@@ -61,37 +60,18 @@ public class ContactCreationTest extends TestBase {
 
     @Test(dataProvider = "validContactFromJSON")
     public void testCreationContact(ContactData contact) {
-        Contacts before = app.goToCont().all();
+        Contacts before = app.db().contacts();
         app.goTo().ContactPage();
-        File photo = new File(properties.getProperty("web.PhotoPath"));
         app.goToCont().create(contact, true);
         app.goTo().goToHomePage();
         assertThat(app.goToCont().Count(), equalTo(before.size() + 1));
-        Contacts after = app.goToCont().all();
+        Contacts after = app.db().contacts();
 
         assertThat(after, equalTo(before.withAdded(contact.withId(after
                 .stream().mapToInt((c) -> c.getId()).max().getAsInt()))));
 
     }
 
-
-    @Test
-    public void testBadCreationContact() {
-        Contacts before = app.goToCont().all();
-        app.goTo().ContactPage();
-        ContactData contact = new ContactData().withFirstName(properties.getProperty("web.BadfirstName"))
-                .withLastName(properties.getProperty("web.lastName"))
-                .withEmail(properties.getProperty("web.email"))
-                .withAddress(properties.getProperty("web.address"))
-                .withGroup(properties.getProperty("web.group"));
-        app.goToCont().create(contact, true);
-        app.goTo().goToHomePage();
-        assertThat(app.goToCont().Count(), equalTo(before.size()));
-        Contacts after = app.goToCont().all();
-
-        assertThat(after, equalTo(before));
-
-    }
 
 
 }
