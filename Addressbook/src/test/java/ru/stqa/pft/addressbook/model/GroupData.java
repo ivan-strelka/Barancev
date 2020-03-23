@@ -91,11 +91,11 @@ public class GroupData {
 
     @Override
     public String toString() {
-        return "GroupDate{" +
-                "id='" + id + '\'' +
+        return "GroupData{" +
+                "id=" + id +
                 ", name='" + name + '\'' +
+                ", header='" + header + '\'' +
+                ", footer='" + footer + '\'' +
                 '}';
     }
-
-
 }
