@@ -2,16 +2,22 @@
   {
     "firstName": "FirstName 0",
     "lastName": "LastName 0",
+    "address": "address0",
+    "email": "email@email0",
     "group": "aaa 0"
   },
   {
     "firstName": "FirstName 1",
     "lastName": "LastName 1",
+    "address": "address1",
+    "email": "email@email1",
     "group": "aaa 1"
   },
   {
     "firstName": "FirstName 2",
     "lastName": "LastName 2",
+    "address": "address2",
+    "email": "email@email2",
     "group": "aaa 2"
   }
 ]
