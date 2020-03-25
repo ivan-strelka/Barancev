@@ -39,7 +39,7 @@ public class ContactHelper extends HelperBase {
 
     }
 
-    public void chooseContactById(int id) {
+    public void selectContactById(int id) {
         wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
     }
 
@@ -110,7 +110,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void delete(ContactData deletedContact) {
-        chooseContactById(deletedContact.getId());
+        selectContactById(deletedContact.getId());
         submitDeleteContact();
         contactCache = null;
     }
@@ -145,6 +145,14 @@ public class ContactHelper extends HelperBase {
         WebElement row = checkbox.findElement(By.xpath("./../.."));
         List<WebElement> cells = row.findElements(By.tagName("td"));
         cells.get(7).findElement(By.tagName("a")).click();
+    }
+
+
+    public void addContactToGroup(String groupName, int contactId) {
+        wd.findElement(By.xpath("//input[@type='checkbox'and @id='" + contactId + "']")).click();
+        wd.findElement(By.name("to_group")).click();
+        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(groupName);
+        wd.findElement(By.name("add")).click();
     }
 
 
