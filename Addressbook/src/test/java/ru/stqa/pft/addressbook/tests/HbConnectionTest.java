@@ -50,12 +50,13 @@ public class HbConnectionTest {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<ContactData> result = session.createQuery("from ContactData").list();
-        for (ContactData contacts : result) {
-            System.out.println(contacts);
-        }
         System.out.println("SIZE IS " + result.size());
         session.getTransaction().commit();
         session.close();
+        for (ContactData contacts : result) {
+            System.out.println(contacts);
+            System.out.println(contacts.getGroups());
+        }
     }
 
 }

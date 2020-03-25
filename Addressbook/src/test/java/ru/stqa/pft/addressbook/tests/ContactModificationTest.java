@@ -5,6 +5,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.io.File;
 import java.io.FileReader;
@@ -16,20 +17,23 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactModificationTest extends TestBase {
 
+
     @BeforeMethod
     public void ensurePreconditions() {
+        Groups groups = app.db().groups();
         if (app.db().contacts().size() == 0) {
             app.goTo().ContactPage();
             app.goToCont().create(new ContactData().withFirstName((properties.getProperty("web.firstName")))
                     .withLastName(properties.getProperty("web.lastName"))
                     .withEmail(properties.getProperty("web.email"))
                     .withAddress(properties.getProperty("web.address"))
-                    .withGroup(properties.getProperty("web.group")), true);
+                    .inGroup(groups.iterator().next()), true);
         }
     }
 
     @Test
     public void testModificationContact() throws IOException {
+        Groups groups = app.db().groups();
         properties = new Properties();
         properties.load(new FileReader(new File(String.format("src/test/resources/local.properties"))));
         Contacts before = app.db().contacts();
@@ -40,7 +44,7 @@ public class ContactModificationTest extends TestBase {
                 .withLastName(properties.getProperty("web.lastName"))
                 .withEmail(properties.getProperty("web.email"))
                 .withAddress(properties.getProperty("web.address"))
-                .withGroup(properties.getProperty("web.group"));
+                .inGroup(groups.iterator().next());
         app.goTo().goToHomePage();
         app.goToCont().modify(contactData);
         app.goTo().goToHomePage();

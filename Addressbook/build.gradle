@@ -31,8 +31,6 @@ dependencies {
     compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.12.Final'
 
 
-
-
 }
 
 tasks.withType(JavaCompile) {
@@ -51,6 +49,10 @@ task testGroups(type: Test) {
         systemProperty 'target', "${target}"
     }
 
+    if (project.hasProperty('verifyUI')) {
+        systemProperty 'verifyUI', "${verifyUI}"
+    }
+
 
 }
 
@@ -67,12 +69,9 @@ task testContacts(type: Test) {
     }
 
 
-//task testOther (type: Test) {
-//    useTestNG {
-//        suites 'src/test/resources/test.xml'
-//    }
-//
-//}
+    if (project.hasProperty('verifyUI')) {
+        systemProperty 'verifyUI', "${verifyUI}"
+    }
 
 
 }
