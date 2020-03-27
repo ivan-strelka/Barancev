@@ -156,4 +156,12 @@ public class ContactHelper extends HelperBase {
     }
 
 
+    public void deleteContactFromGroup(String groupName, int contactId) {
+        wd.findElement(By.name("group")).click();
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText(groupName);
+        wd.findElement(By.xpath("//input[@type='checkbox'and @id='" + contactId + "']")).click();
+        wd.findElement(By.name("remove")).click();
+    }
+
+
 }
