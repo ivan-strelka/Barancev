@@ -163,5 +163,4 @@ public class ContactHelper extends HelperBase {
         wd.findElement(By.name("remove")).click();
     }
 
-
 }
