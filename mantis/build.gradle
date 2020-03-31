@@ -13,10 +13,11 @@ repositories {
 dependencies {
     compile group: 'org.testng', name: 'testng', version: '7.1.0'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
-    compile group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
+    testCompile group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
     compile 'commons-net:commons-net:3.6'
-    // https://mvnrepository.com/artifact/com.cisco.oss.foundation/http-client-apache
-    testCompile group: 'com.cisco.oss.foundation', name: 'http-client-apache', version: '1.2.2-4'
+    // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.12'
+
 
 
 
