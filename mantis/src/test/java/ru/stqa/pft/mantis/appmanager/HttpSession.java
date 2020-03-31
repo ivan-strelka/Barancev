@@ -26,11 +26,11 @@ public class HttpSession {
         httpclient = HttpClients.custom().setRedirectStrategy(new LaxRedirectStrategy()).build();
     }
 
-    public boolean login(String username) throws IOException {
-        HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "/login.php");
+    public boolean login(String username, String password) throws IOException {
+        HttpPost post = new HttpPost(app.getProperty("web.BaseUrl") + "/login.php");
         List<BasicNameValuePair> params = new ArrayList<>();
         params.add(new BasicNameValuePair("username", username));
-        params.add(new BasicNameValuePair("password", "test"));
+        params.add(new BasicNameValuePair("password", password));
         params.add(new BasicNameValuePair("secure_session", "on"));
         params.add(new BasicNameValuePair("return", "index.php"));
         post.setEntity(new UrlEncodedFormEntity(params));
@@ -48,7 +48,7 @@ public class HttpSession {
     }
 
     public boolean isLoggedInAs(String username) throws IOException {
-        HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/index.php");
+        HttpGet get = new HttpGet(app.getProperty("web.BaseUrl") + "/index.php");
         CloseableHttpResponse response = httpclient.execute(get);
         String body = geTextFrom(response);
         return body.contains(String.format("<span class=\"user-info\">%s</span>", username));

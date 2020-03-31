@@ -17,7 +17,6 @@ public class FtpHelper {
     }
 
     public void upload(File file, String target, String backup) throws IOException {
-
         ftp.connect(app.getProperty("ftp.host"));
         ftp.login(app.getProperty("ftp.login"), app.getProperty("ftp.password"));
         ftp.deleteFile(backup);
@@ -27,7 +26,7 @@ public class FtpHelper {
         ftp.disconnect();
     }
 
-    public void restore(String backup, String target) throws IOException {  // восстанавливает старый файл
+    public void restore(String backup, String target) throws IOException {
         ftp.connect(app.getProperty("ftp.host"));
         ftp.login(app.getProperty("ftp.login"), app.getProperty("ftp.password"));
         ftp.deleteFile(target);
