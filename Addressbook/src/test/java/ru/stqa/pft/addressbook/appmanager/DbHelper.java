@@ -14,6 +14,7 @@ import java.util.List;
 
 public class DbHelper {
 
+
     private final SessionFactory sessionFactory;
 
     public DbHelper() {
@@ -41,6 +42,18 @@ public class DbHelper {
         session.close();
         return new Contacts(result);
 
+    }
+
+    public Groups contactInGroup() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<ContactData> result = session.createQuery("from ContactData where deprecated = '000-00-00'").list();
+        for (ContactData contact : result) {
+            return new Groups(contact.getGroups());
+        }
+        session.getTransaction().commit();
+        session.close();
+        return contactInGroup();
     }
 
 
