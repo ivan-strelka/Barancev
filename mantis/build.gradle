@@ -22,6 +22,9 @@ dependencies {
     testCompile group: 'org.subethamail', name: 'subethasmtp', version: '3.1.7'
     // https://mvnrepository.com/artifact/com.sun.mail/javax.mail
     compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
+    // https://mvnrepository.com/artifact/ru.lanwen.verbalregex/java-verbal-expressions
+    compile group: 'ru.lanwen.verbalregex', name: 'java-verbal-expressions', version: '1.6'
+
 
 
 
