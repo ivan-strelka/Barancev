@@ -1,5 +1,3 @@
-import org.gradle.api.tasks.testing.Test
-
 plugins {
     id 'java'
 }
@@ -13,12 +11,14 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'org.testng', name: 'testng', version: '7.1.0'
-    // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
+    compile group: 'org.testng', name: 'testng', version: '7.1.0'
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
-    // https://mvnrepository.com/artifact/org.hamcrest/java-hamcrest
-    testCompile group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
-    // https://mvnrepository.com/artifact/com.beust/jcommander
+    compile group: 'org.hamcrest', name: 'java-hamcrest', version: '2.0.0.0'
+    compile 'commons-net:commons-net:3.6'
+    // https://mvnrepository.com/artifact/com.cisco.oss.foundation/http-client-apache
+    testCompile group: 'com.cisco.oss.foundation', name: 'http-client-apache', version: '1.2.2-4'
+
+
 
 
 }
