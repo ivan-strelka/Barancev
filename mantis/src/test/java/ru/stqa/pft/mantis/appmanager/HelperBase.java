@@ -1,6 +1,7 @@
 package ru.stqa.pft.mantis.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
 public class HelperBase {
@@ -25,6 +26,15 @@ public class HelperBase {
                 wd.findElement(locator).clear();
                 wd.findElement(locator).sendKeys(text);
             }
+        }
+    }
+
+    public boolean isElementPresent(By locator) {
+        try {
+            wd.findElement(locator);
+            return true;
+        } catch (NoSuchElementException ex) {
+            return false;
         }
     }
 

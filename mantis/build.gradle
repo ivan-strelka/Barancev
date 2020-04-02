@@ -26,12 +26,12 @@ dependencies {
     compile group: 'com.sun.mail', name: 'javax.mail', version: '1.6.2'
     // https://mvnrepository.com/artifact/ru.lanwen.verbalregex/java-verbal-expressions
     compile group: 'ru.lanwen.verbalregex', name: 'java-verbal-expressions', version: '1.6'
-
-
-
-
-
-
+    // https://mvnrepository.com/artifact/com.beust/jcommander
+    compile group: 'com.beust', name: 'jcommander', version: '1.78'
+    compile("com.thoughtworks.xstream:xstream:1.4.11.1")
+    implementation 'com.google.code.gson:gson:2.8.6'
+    compile("mysql:mysql-connector-java:8.0.15")
+    compile("org.hibernate:hibernate-core:5.4.2.Final")
 
 
 }
