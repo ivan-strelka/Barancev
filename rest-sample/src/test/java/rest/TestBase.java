@@ -55,7 +55,7 @@ public class TestBase {
 
     boolean isIssueOpen(int issueId) throws IOException {
         String status = getIssueStatus(issueId);
-        if (status.equals("Fixed")) {
+        if (status.equals("Resolved") || status.equals("Closed")) {
             return false;
         } else {
             return true;
