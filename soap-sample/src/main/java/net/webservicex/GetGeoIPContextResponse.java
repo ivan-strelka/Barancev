@@ -1,3 +1,4 @@
+
 package net.webservicex;
 
 import javax.xml.bind.annotation.*;
@@ -33,8 +34,10 @@ public class GetGeoIPContextResponse {
     /**
      * Gets the value of the getGeoIPContextResult property.
      *
-     * @return possible object is
-     * {@link GeoIP }
+     * @return
+     *     possible object is
+     *     {@link GeoIP }
+     *
      */
     public GeoIP getGetGeoIPContextResult() {
         return getGeoIPContextResult;
@@ -43,8 +46,10 @@ public class GetGeoIPContextResponse {
     /**
      * Sets the value of the getGeoIPContextResult property.
      *
-     * @param value allowed object is
-     *              {@link GeoIP }
+     * @param value
+     *     allowed object is
+     *     {@link GeoIP }
+     *
      */
     public void setGetGeoIPContextResult(GeoIP value) {
         this.getGeoIPContextResult = value;

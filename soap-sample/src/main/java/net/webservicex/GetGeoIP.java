@@ -1,3 +1,4 @@
+
 package net.webservicex;
 
 import javax.xml.bind.annotation.*;
@@ -33,8 +34,10 @@ public class GetGeoIP {
     /**
      * Gets the value of the ipAddress property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
      */
     public String getIPAddress() {
         return ipAddress;
@@ -43,8 +46,10 @@ public class GetGeoIP {
     /**
      * Sets the value of the ipAddress property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
      */
     public void setIPAddress(String value) {
         this.ipAddress = value;

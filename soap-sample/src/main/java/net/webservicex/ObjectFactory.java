@@ -1,3 +1,4 @@
+
 package net.webservicex;
 
 import javax.xml.bind.JAXBElement;
@@ -26,12 +27,14 @@ public class ObjectFactory {
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: net.webservicex
+     *
      */
     public ObjectFactory() {
     }
 
     /**
      * Create an instance of {@link GetGeoIP }
+     *
      */
     public GetGeoIP createGetGeoIP() {
         return new GetGeoIP();
@@ -39,6 +42,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link GetGeoIPResponse }
+     *
      */
     public GetGeoIPResponse createGetGeoIPResponse() {
         return new GetGeoIPResponse();
@@ -46,6 +50,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link GeoIP }
+     *
      */
     public GeoIP createGeoIP() {
         return new GeoIP();
@@ -53,6 +58,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link GetGeoIPContext }
+     *
      */
     public GetGeoIPContext createGetGeoIPContext() {
         return new GetGeoIPContext();
@@ -60,6 +66,7 @@ public class ObjectFactory {
 
     /**
      * Create an instance of {@link GetGeoIPContextResponse }
+     *
      */
     public GetGeoIPContextResponse createGetGeoIPContextResponse() {
         return new GetGeoIPContextResponse();
@@ -68,8 +75,10 @@ public class ObjectFactory {
     /**
      * Create an instance of {@link JAXBElement }{@code <}{@link GeoIP }{@code >}
      *
-     * @param value Java instance representing xml element's value.
-     * @return the new instance of {@link JAXBElement }{@code <}{@link GeoIP }{@code >}
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link GeoIP }{@code >}
      */
     @XmlElementDecl(namespace = "http://www.webservicex.net/", name = "GeoIP")
     public JAXBElement<GeoIP> createGeoIP(GeoIP value) {

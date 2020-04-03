@@ -1,3 +1,4 @@
+
 package net.webservicex;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -50,6 +51,7 @@ public class GeoIP {
 
     /**
      * Gets the value of the returnCode property.
+     *
      */
     public int getReturnCode() {
         return returnCode;
@@ -57,6 +59,7 @@ public class GeoIP {
 
     /**
      * Sets the value of the returnCode property.
+     *
      */
     public void setReturnCode(int value) {
         this.returnCode = value;
@@ -65,8 +68,10 @@ public class GeoIP {
     /**
      * Gets the value of the ip property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
      */
     public String getIP() {
         return ip;
@@ -75,8 +80,10 @@ public class GeoIP {
     /**
      * Sets the value of the ip property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
      */
     public void setIP(String value) {
         this.ip = value;
@@ -85,8 +92,10 @@ public class GeoIP {
     /**
      * Gets the value of the returnCodeDetails property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
      */
     public String getReturnCodeDetails() {
         return returnCodeDetails;
@@ -95,8 +104,10 @@ public class GeoIP {
     /**
      * Sets the value of the returnCodeDetails property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
      */
     public void setReturnCodeDetails(String value) {
         this.returnCodeDetails = value;
@@ -105,8 +116,10 @@ public class GeoIP {
     /**
      * Gets the value of the countryName property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
      */
     public String getCountryName() {
         return countryName;
@@ -115,8 +128,10 @@ public class GeoIP {
     /**
      * Sets the value of the countryName property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
      */
     public void setCountryName(String value) {
         this.countryName = value;
@@ -125,8 +140,10 @@ public class GeoIP {
     /**
      * Gets the value of the countryCode property.
      *
-     * @return possible object is
-     * {@link String }
+     * @return
+     *     possible object is
+     *     {@link String }
+     *
      */
     public String getCountryCode() {
         return countryCode;
@@ -135,8 +152,10 @@ public class GeoIP {
     /**
      * Sets the value of the countryCode property.
      *
-     * @param value allowed object is
-     *              {@link String }
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *
      */
     public void setCountryCode(String value) {
         this.countryCode = value;
