@@ -1,6 +1,5 @@
 package ru.stqa.pft.addressbook.tests;
 
-import org.hibernate.Session;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
@@ -39,7 +38,7 @@ public class AddUserInGroupTest extends TestBase {
         Contacts before = app.db().contacts();
         ContactData addedToGroupContact = before.iterator().next();
         GroupData addedGroup = groups.iterator().next();
-        Groups contactInGroupsBeforeAdded = app.db().contactInGroup();
+        Groups contactInGroupsBeforeAdded = app.db().groups();
         if (addedToGroupContact.getGroups().size() == app.db().groups().size()) {
             app.goTo().GroupPage();
             GroupData group = new GroupData().withName("aaa").withHeader("bbb").withFooter("ccc");
@@ -49,13 +48,13 @@ public class AddUserInGroupTest extends TestBase {
             for (GroupData newGroup : newGroupsList) {
                 if (newGroup.getId() == newGroupsList.stream().mapToInt((g) -> g.getId()).max().getAsInt()) {
                     app.goToCont().addContactToGroup(addedToGroupContact, newGroup);
-                    Groups contactInGroupsAfterAdded = app.db().contactInGroup();
+                    Groups contactInGroupsAfterAdded = app.db().groups();
                     assertThat(contactInGroupsAfterAdded.size(), equalTo(contactInGroupsBeforeAdded.size() + 1));
                 }
             }
         } else if (addedToGroupContact.getGroups().size() == 0) {
             app.goToCont().addContactToGroup(addedToGroupContact, groups.iterator().next());
-            Groups contactInGroupsAfterAdded = app.db().contactInGroup();
+            Groups contactInGroupsAfterAdded = app.db().groups();
             assertThat(contactInGroupsAfterAdded, equalTo(contactInGroupsBeforeAdded.withAdded(addedGroup)));
         } else {
             mainloop:
@@ -63,7 +62,7 @@ public class AddUserInGroupTest extends TestBase {
                 for (GroupData userGroup : addedToGroupContact.getGroups()) {
                     if (!userGroup.equals(selectedGroup)) {
                         app.goToCont().addContactToGroup(addedToGroupContact, selectedGroup);
-                        Groups contactInGroupsAfterAdded = app.db().contactInGroup();
+                        Groups contactInGroupsAfterAdded = app.db().groups();
                         assertThat(contactInGroupsAfterAdded, equalTo(contactInGroupsBeforeAdded.withAdded(selectedGroup)));
                         break mainloop;
                     }
@@ -73,31 +72,31 @@ public class AddUserInGroupTest extends TestBase {
     }
 
 
-    @Test
-    public void addUserInGroupTest() {
-        app.goTo().goToHomePage();
-        Contacts contacts = app.db().contacts();
-        ContactData selectedContact = contacts.iterator().next();
-        Groups groups = app.db().groups();
-        GroupData selectedGroup = groups.iterator().next();
-        int selectedContactId = selectedContact.getId();
-        Groups beforeGroup = selectContact(selectedContactId).getGroups();
-        String groupName = selectedGroup.getName();
-        app.goToCont().addContactToGroup(groupName, selectedContactId);
-        Groups afterGroups = selectContact(selectedContactId).getGroups();
-        assertThat(afterGroups,
-                equalTo(beforeGroup.withAdded(selectedGroup)));
-
-    }
-
-    public ContactData selectContact(int contactId) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Object result = session.createQuery("from ContactData where id =" + contactId).uniqueResult();
-        session.getTransaction().commit();
-        session.close();
-        return ((ContactData) result);
-    }
+//    @Test
+//    public void addUserInGroupTest() {
+//        app.goTo().goToHomePage();
+//        Contacts contacts = app.db().contacts();
+//        ContactData selectedContact = contacts.iterator().next();
+//        Groups groups = app.db().groups();
+//        GroupData selectedGroup = groups.iterator().next();
+//        int selectedContactId = selectedContact.getId();
+//        Groups beforeGroup = selectContact(selectedContactId).getGroups();
+//        String groupName = selectedGroup.getName();
+//        app.goToCont().addContactToGroup(groupName, selectedContactId);
+//        Groups afterGroups = selectContact(selectedContactId).getGroups();
+//        assertThat(afterGroups,
+//                equalTo(beforeGroup.withAdded(selectedGroup)));
+//
+//    }
+//
+//    public ContactData selectContact(int contactId) {
+//        Session session = sessionFactory.openSession();
+//        session.beginTransaction();
+//        Object result = session.createQuery("from ContactData where id =" + contactId).uniqueResult();
+//        session.getTransaction().commit();
+//        session.close();
+//        return ((ContactData) result);
+//    }
 
 
 }

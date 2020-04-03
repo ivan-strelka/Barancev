@@ -1,12 +1,16 @@
 package ru.stqa.pft.mantis.test;
 
+import org.hibernate.service.spi.ServiceException;
 import org.openqa.selenium.remote.BrowserType;
+import org.testng.SkipException;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import ru.stqa.pft.mantis.appmanager.ApplicationManager;
 
 import java.io.File;
 import java.io.FileReader;
+import java.net.MalformedURLException;
+import java.rmi.RemoteException;
 import java.util.Properties;
 
 public class TestBase {
@@ -28,7 +32,20 @@ public class TestBase {
         app.stop();
     }
 
+    public boolean isIssueOpen(int issueId) throws RemoteException, ServiceException, MalformedURLException, javax.xml.rpc.ServiceException {
+        String status = app.soap().getIssueStatus(issueId);
+        System.out.println(status);
+        if (status.equals("resolved")) {
+            return false;
+        }
+        return true;
+    }
 
+    public void skipIfNotFixed(int issueId) throws RemoteException, ServiceException, MalformedURLException, javax.xml.rpc.ServiceException {
+        if (isIssueOpen(issueId)) {
+            throw new SkipException("Ignored because of issue " + issueId);
+        }
+    }
 
 
 }
