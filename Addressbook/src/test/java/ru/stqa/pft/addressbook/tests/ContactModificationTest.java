@@ -22,7 +22,7 @@ public class ContactModificationTest extends TestBase {
     public void ensurePreconditions() {
         Groups groups = app.db().groups();
         if (app.db().contacts().size() == 0) {
-            app.goTo().ContactPage();
+            app.goTo().addContactPage();
             app.goToCont().create(new ContactData().withFirstName((properties.getProperty("web.firstName")))
                     .withLastName(properties.getProperty("web.lastName"))
                     .withEmail(properties.getProperty("web.email"))

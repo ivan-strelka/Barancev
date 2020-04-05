@@ -61,7 +61,7 @@ public class ContactCreationTest extends TestBase {
     @Test(dataProvider = "validContactFromJSON")
     public void testCreationContact(ContactData contact) {
         Contacts before = app.db().contacts();
-        app.goTo().ContactPage();
+        app.goTo().addContactPage();
         app.goToCont().create(contact, true);
         app.goTo().goToHomePage();
         assertThat(app.goToCont().Count(), equalTo(before.size() + 1));

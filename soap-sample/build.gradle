@@ -30,3 +30,7 @@ wsdl2java {
                           ['src/main/resources/geoipservice.wsdl'],
     ]
 }
+
+test {
+    useTestNG()
+}

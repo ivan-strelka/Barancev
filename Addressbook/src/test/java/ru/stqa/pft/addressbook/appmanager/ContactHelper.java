@@ -1,18 +1,29 @@
 package ru.stqa.pft.addressbook.appmanager;
 
+import com.google.common.collect.Sets;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
+import ru.stqa.pft.addressbook.model.Groups;
 
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase {
 
+    protected static final ApplicationManager app =
+            new ApplicationManager(System.getProperty("browser", BrowserType.CHROME));
 
     public ContactHelper(WebDriver wd) {
         super(wd);
@@ -149,35 +160,87 @@ public class ContactHelper extends HelperBase {
     }
 
 
-    public void addContactToGroup(String groupName, int contactId) {
-        wd.findElement(By.xpath("//input[@type='checkbox'and @id='" + contactId + "']")).click();
+//    public void addContactToGroup(String groupName, int contactId) {
+//        wd.findElement(By.xpath("//input[@type='checkbox'and @id='" + contactId + "']")).click();
+//        wd.findElement(By.name("to_group")).click();
+//        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(groupName);
+//        wd.findElement(By.name("add")).click();
+//    }
+
+    public void addContactToGroup(ContactData contact) {
+        selectContactById(contact.getId());
         wd.findElement(By.name("to_group")).click();
-        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(groupName);
+        selectGroup(contact, true);
+        addToGroup();
+        app.goTo().goToHomePage();
+    }
+
+    public void removeFromGroup(ContactData contact) {
+        selectContactById(contact.getId());
+        submitContactDeletionFromGroup();
+        app.goTo().goToHomePage();
+    }
+
+    public void addToGroup() {
         wd.findElement(By.name("add")).click();
     }
 
+    public void selectGroup(ContactData contactData, boolean selection) {
 
-    public void deleteContactFromGroup(String groupName, int contactId) {
-        wd.findElement(By.name("group")).click();
-        new Select(wd.findElement(By.name("group"))).selectByVisibleText(groupName);
-        wd.findElement(By.xpath("//input[@type='checkbox'and @id='" + contactId + "']")).click();
-        wd.findElement(By.name("remove")).click();
+        int contactGroupSize = contactData.getGroups().size();
+        int totalDBGroupSize = app.db().groups().size();
+        int counter = 0;
+        if (selection) {
+            if (contactGroupSize == 0 || contactGroupSize == totalDBGroupSize) {
+
+                List<ContactData> contactList = app.goToCont().getContactsList();
+                for (ContactData contact : contactList) {
+                    if (contact.getGroups().size() < totalDBGroupSize) {
+                        app.goTo().goToHomePage();
+                        selectContactById(contact.getId());
+                        new Select(wd.findElement(By.name("to_group")))
+                                .selectByValue(String.valueOf(getGroupListWithoutContact(contact.getGroups())
+                                        .iterator().next().getId()));
+                        counter++;
+                        break;
+                    }
+                }
+                if (counter == 0) {
+                    app.goTo().addContactPage();
+                    app.goToCont().create(new ContactData().withFirstName("ssdf12")
+                            .withLastName("sdfsdf123"), true);
+                    addContactToGroup(contactData);
+                }
+            } else {
+                Groups totalContactGroups = contactData.getGroups();
+                new Select(wd.findElement(By.name("to_group")))
+                        .selectByValue(String.valueOf(getGroupListWithoutContact(totalContactGroups)
+                                .iterator().next().getId()));
+            }
+        }
     }
 
-    public ContactData addContactToGroup(ContactData contact, GroupData group) {
-        selectContactById(contact.getId());
-        chooseContactForAddingToGroup(group, group.getId());
-        return new ContactData().inGroup(group).withId(contact.getId()).withFirstName(contact.getFirstName())
-                .withLastName(contact.getLastName()).withAddress(contact.getAddress());
-    }
+//    public void deleteContactFromGroup(String groupName, int contactId) {
+//        wd.findElement(By.name("group")).click();
+//        new Select(wd.findElement(By.name("group"))).selectByVisibleText(groupName);
+//        wd.findElement(By.xpath("//input[@type='checkbox'and @id='" + contactId + "']")).click();
+//        wd.findElement(By.name("remove")).click();
+//    }
+
+//    public ContactData addContactToGroup(ContactData contact, GroupData group) {
+//        selectContactById(contact.getId());
+//        chooseContactForAddingToGroup(group, group.getId());
+//        return new ContactData().inGroup(group).withId(contact.getId()).withFirstName(contact.getFirstName())
+//                .withLastName(contact.getLastName()).withAddress(contact.getAddress());
+//    }
 
 
-    public ContactData chooseContactForAddingToGroup(GroupData group, int id) {
-        WebElement chooseGroup = wd.findElement(By.xpath("//select[@name='to_group']//option[@value='" + id + "']"));
-        chooseGroup.click();
-        click(By.name("add"));
-        return new ContactData().inGroup(group);
-    }
+//    public ContactData chooseContactForAddingToGroup(GroupData group, int id) {
+//        WebElement chooseGroup = wd.findElement(By.xpath("//select[@name='to_group']//option[@value='" + id + "']"));
+//        chooseGroup.click();
+//        click(By.name("add"));
+//        return new ContactData().inGroup(group);
+//    }
 
     public void removeContactFromGroup(ContactData contact, GroupData group) {
         selectContactById(contact.getId());
@@ -208,5 +271,23 @@ public class ContactHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
+
+    public List<ContactData> getContactsList() {
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
+        SessionFactory sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        List<ContactData> result = session.createQuery("from ContactData where deprecated = '0000-00-00'").list();
+        session.close();
+        return result;
+    }
+
+    public Set<GroupData> getGroupListWithoutContact(Groups totalContactGroups) {
+        Groups totalGroups = app.db().groups();
+        return Sets.difference(totalGroups, totalContactGroups);
+    }
+
+    public void selectGroupFromFilterByGroupId(int groupId) {
+        new Select(wd.findElement(By.name("group"))).selectByValue(String.valueOf(groupId));
+    }
 
 }
