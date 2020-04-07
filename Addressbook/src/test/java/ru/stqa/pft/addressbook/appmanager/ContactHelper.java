@@ -160,12 +160,6 @@ public class ContactHelper extends HelperBase {
     }
 
 
-//    public void addContactToGroup(String groupName, int contactId) {
-//        wd.findElement(By.xpath("//input[@type='checkbox'and @id='" + contactId + "']")).click();
-//        wd.findElement(By.name("to_group")).click();
-//        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(groupName);
-//        wd.findElement(By.name("add")).click();
-//    }
 
     public void addContactToGroup(ContactData contact) {
         selectContactById(contact.getId());
@@ -175,11 +169,6 @@ public class ContactHelper extends HelperBase {
         app.goTo().goToHomePage();
     }
 
-    public void removeFromGroup(ContactData contact) {
-        selectContactById(contact.getId());
-        submitContactDeletionFromGroup();
-        app.goTo().goToHomePage();
-    }
 
     public void addToGroup() {
         wd.findElement(By.name("add")).click();
@@ -188,7 +177,7 @@ public class ContactHelper extends HelperBase {
     public void selectGroup(ContactData contactData, boolean selection) {
 
         int contactGroupSize = contactData.getGroups().size();
-        int totalDBGroupSize = app.db().groups().size();
+        int totalDBGroupSize = app.db().getGroups().size();
         int counter = 0;
         if (selection) {
             if (contactGroupSize == 0 || contactGroupSize == totalDBGroupSize) {
@@ -220,51 +209,20 @@ public class ContactHelper extends HelperBase {
         }
     }
 
-//    public void deleteContactFromGroup(String groupName, int contactId) {
-//        wd.findElement(By.name("group")).click();
-//        new Select(wd.findElement(By.name("group"))).selectByVisibleText(groupName);
-//        wd.findElement(By.xpath("//input[@type='checkbox'and @id='" + contactId + "']")).click();
-//        wd.findElement(By.name("remove")).click();
-//    }
-
-//    public ContactData addContactToGroup(ContactData contact, GroupData group) {
-//        selectContactById(contact.getId());
-//        chooseContactForAddingToGroup(group, group.getId());
-//        return new ContactData().inGroup(group).withId(contact.getId()).withFirstName(contact.getFirstName())
-//                .withLastName(contact.getLastName()).withAddress(contact.getAddress());
-//    }
-
-
-//    public ContactData chooseContactForAddingToGroup(GroupData group, int id) {
-//        WebElement chooseGroup = wd.findElement(By.xpath("//select[@name='to_group']//option[@value='" + id + "']"));
-//        chooseGroup.click();
-//        click(By.name("add"));
-//        return new ContactData().inGroup(group);
-//    }
-
-    public void removeContactFromGroup(ContactData contact, GroupData group) {
-        selectContactById(contact.getId());
-        chooseGroupFromList(group.getId());
-        initContactActionWithGroupById(contact.getId());
-        submitContactDeletionFromGroup();
-        chooseAllGroupsFromTheList();
+    public void selectGroup(ContactData user, GroupData group) {
+        editContactById(user.getId());
+        String groupId = String.valueOf(group.getId());
+        new Select(wd.findElement(By.name("to_group"))).selectByValue(groupId);
+        addUserToGroup();
     }
 
-    private void chooseGroupFromList(int id) {
-        wd.findElement(By.cssSelector("option[value='" + id + "']")).click();
+    public void addUserToGroup() {
+        wd.findElement(By.name("add")).click();
     }
 
-    private void initContactActionWithGroupById(int id) {
-        wd.findElement(By.cssSelector("input[value='" + id + "']")).click();
-    }
 
-    private void submitContactDeletionFromGroup() {
-        click(By.name("remove"));
-    }
-
-    private void chooseAllGroupsFromTheList() {
-        click(By.linkText("home"));
-        wd.findElement(By.cssSelector("option[value='']")).click();
+    public void allGroupsOnPage() {
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText("[all]");
     }
 
     public int count() {
@@ -282,12 +240,17 @@ public class ContactHelper extends HelperBase {
     }
 
     public Set<GroupData> getGroupListWithoutContact(Groups totalContactGroups) {
-        Groups totalGroups = app.db().groups();
+        Groups totalGroups = app.db().getGroups();
         return Sets.difference(totalGroups, totalContactGroups);
     }
 
-    public void selectGroupFromFilterByGroupId(int groupId) {
-        new Select(wd.findElement(By.name("group"))).selectByValue(String.valueOf(groupId));
+    public void usersInGroup(GroupData group) {
+        String groupId = String.valueOf(group.getId());
+        new Select(wd.findElement(By.name("group"))).selectByValue(groupId);
+    }
+
+    public void removeUserFromGroup() {
+        wd.findElement(By.name("remove")).click();
     }
 
 }

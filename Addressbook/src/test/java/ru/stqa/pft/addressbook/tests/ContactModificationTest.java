@@ -20,7 +20,7 @@ public class ContactModificationTest extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        Groups groups = app.db().groups();
+        Groups groups = app.db().getGroups();
         if (app.db().contacts().size() == 0) {
             app.goTo().addContactPage();
             app.goToCont().create(new ContactData().withFirstName((properties.getProperty("web.firstName")))
@@ -33,7 +33,7 @@ public class ContactModificationTest extends TestBase {
 
     @Test
     public void testModificationContact() throws IOException {
-        Groups groups = app.db().groups();
+        Groups groups = app.db().getGroups();
         properties = new Properties();
         properties.load(new FileReader(new File(String.format("src/test/resources/local.properties"))));
         Contacts before = app.db().contacts();

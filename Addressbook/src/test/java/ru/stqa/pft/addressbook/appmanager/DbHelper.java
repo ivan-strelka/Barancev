@@ -14,8 +14,8 @@ import java.util.List;
 
 public class DbHelper {
 
-
     private final SessionFactory sessionFactory;
+
 
     public DbHelper() {
         // A SessionFactory is set up once for an application!
@@ -25,7 +25,7 @@ public class DbHelper {
         sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
 
-    public Groups groups() {
+    public Groups getGroups() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         List<GroupData> result = session.createQuery("from GroupData").list();
@@ -42,18 +42,6 @@ public class DbHelper {
         session.close();
         return new Contacts(result);
 
-    }
-
-    public Groups contactInGroup() {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        List<ContactData> result = session.createQuery("from ContactData where deprecated = '000-00-00'").list();
-        for (ContactData contact : result) {
-            return new Groups(contact.getGroups());
-        }
-        session.getTransaction().commit();
-        session.close();
-        return contactInGroup();
     }
 
 

@@ -57,7 +57,7 @@ public class TestBase {
 
     public void verifyGroupListInUI() {
         if (Boolean.getBoolean("verifyUI")) {
-            Groups dbGroups = app.db().groups();
+            Groups dbGroups = app.db().getGroups();
             Groups uiGroups = app.group().all();
             assertThat(uiGroups, equalTo(dbGroups.stream().map((g) -> new GroupData()
                     .withId(g.getId())

@@ -13,7 +13,7 @@ public class DeletedContactTest extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        Groups groups = app.db().groups();
+        Groups groups = app.db().getGroups();
         if (app.db().contacts().size() == 0) {
             app.goTo().addContactPage();
             app.goToCont().create(new ContactData().withFirstName((properties.getProperty("web.firstName")))
