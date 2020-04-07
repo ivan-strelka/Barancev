@@ -57,7 +57,7 @@ public class DeleteContactFromGroupTest extends TestBase {
         }
 
         app.goToCont().usersInGroup(groupSelect);
-        app.goToCont().editContactById(userSelect.getId());
+        app.goToCont().selectContactById(userSelect.getId());
         app.goToCont().removeUserFromGroup();
         app.goTo().goToHomePage();
 

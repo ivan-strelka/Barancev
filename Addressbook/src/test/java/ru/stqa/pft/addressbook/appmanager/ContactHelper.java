@@ -210,7 +210,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void selectGroup(ContactData user, GroupData group) {
-        editContactById(user.getId());
+        selectContactById(user.getId());
         String groupId = String.valueOf(group.getId());
         new Select(wd.findElement(By.name("to_group"))).selectByValue(groupId);
         addUserToGroup();
