@@ -1,14 +1,13 @@
 package ru.stqa.pft.addressbook.tests;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.ContactData;
-import ru.stqa.pft.addressbook.model.Contacts;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.model.Groups;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import java.util.List;
 
 public class DeleteContactFromGroupTest extends TestBase {
 
@@ -33,43 +32,41 @@ public class DeleteContactFromGroupTest extends TestBase {
 
     @Test
     public void testContactRemoveFromGroup() {
-        ContactData userAfter = null;
-        ContactData userSelect;
-        GroupData groupSelect = null;
-
         Groups groups = app.db().getGroups();
-        Contacts users = app.db().contacts();
+        GroupData groupInf = groups.iterator().next();
         app.goTo().goToHomePage();
-        userSelect = users.iterator().next();
-
-        for (ContactData currentUser : users) {
-            Groups currentGroup = currentUser.getGroups();
-            if (currentGroup.size() > 0) {
-                userSelect = currentUser;
-                groupSelect = currentUser.getGroups().iterator().next();
-                break;
+        ContactData before = null;
+        List<ContactData> beforeCnts = app.goToCont().getContactsList();
+        ContactData added = beforeCnts.iterator().next();
+        for (ContactData b : beforeCnts) {
+            if (b.getId() == added.getId()) {
+                before = b;
             }
         }
 
-        if (userSelect.getGroups().size() == 0) {
-            groupSelect = groups.iterator().next();
-            app.goToCont().selectGroup(userSelect, groupSelect);
+        if (groupInf.getContacts().contains(added.getId())) {
+            app.goToCont().deletedGroup(added, groupInf, true);
+        } else {
+            app.goToCont().deletedGroup(added, groupInf, false);
         }
-
-        app.goToCont().usersInGroup(groupSelect);
-        app.goToCont().selectContactById(userSelect.getId());
-        app.goToCont().removeUserFromGroup();
-        app.goTo().goToHomePage();
-
-        Contacts usersAllAfter = app.db().contacts();
-        for (ContactData userChoiceAfter : usersAllAfter) {
-            if (userChoiceAfter.getId() == userSelect.getId()) {
-                userAfter = userChoiceAfter;
+        ContactData after = null;
+        List<ContactData> afterCnts = app.goToCont().getContactsList();
+        for (ContactData a : afterCnts) {
+            if (a.getId() == before.getId()) {
+                after = a;
             }
         }
 
-        assertThat(userSelect.getGroups(),
-                equalTo(userAfter.getGroups().withAdded(groupSelect)));
+        if (after.getGroups().size() != (before.getGroups().size())) {
+            Assert.assertEquals(after.getGroups().size(), before.getGroups().size() - 1);
+        }
+
+        if (!after.getGroups().equals(before.getGroups())) {
+            Assert.assertEquals(after.getGroups(), before.getGroups().withOut(groupInf));
+        } else {
+            Assert.assertEquals(after.getGroups(), before.getGroups());
+        }
+
     }
 
 

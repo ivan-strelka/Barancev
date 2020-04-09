@@ -160,7 +160,6 @@ public class ContactHelper extends HelperBase {
     }
 
 
-
     public void addContactToGroup(ContactData contact) {
         selectContactById(contact.getId());
         wd.findElement(By.name("to_group")).click();
@@ -244,13 +243,32 @@ public class ContactHelper extends HelperBase {
         return Sets.difference(totalGroups, totalContactGroups);
     }
 
-    public void usersInGroup(GroupData group) {
-        String groupId = String.valueOf(group.getId());
-        new Select(wd.findElement(By.name("group"))).selectByValue(groupId);
+
+    public void addInGroup(ContactData cont, GroupData nameGroup) {
+        wd.findElement(By.cssSelector("input[value = '" + cont.getId() + "']")).click();
+        wd.findElement(By.name("to_group")).click();
+        new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(nameGroup.getName());
+        wd.findElement(By.name("add")).click();
+        app.goTo().goToHomePage();
     }
 
-    public void removeUserFromGroup() {
-        wd.findElement(By.name("remove")).click();
+    public void deletedGroup(ContactData cont, GroupData group, boolean have) {
+        wd.findElement(By.linkText("home")).click();
+        wd.findElement(By.name("group")).click();
+        new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
+        if (have) {
+            wd.findElement(By.cssSelector("input[value = '" + cont.getId() + "']")).click();
+            wd.findElement(By.name("remove")).click();
+            wd.findElement(By.linkText("home")).click();
+        } else {
+            new Select(wd.findElement(By.name("group"))).selectByVisibleText("[all]");
+            addInGroup(cont, group);
+            wd.findElement(By.name("group")).click();
+            new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
+            wd.findElement(By.cssSelector("input[value = '" + cont.getId() + "']")).click();
+            wd.findElement(By.name("remove")).click();
+            wd.findElement(By.linkText("home")).click();
+        }
     }
 
 }
