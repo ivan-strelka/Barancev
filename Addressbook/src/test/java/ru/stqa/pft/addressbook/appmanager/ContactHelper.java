@@ -262,6 +262,7 @@ public class ContactHelper extends HelperBase {
         } else {
             new Select(wd.findElement(By.name("group"))).selectByVisibleText("[all]");
             addInGroup(cont, group);
+            wd.findElement(By.linkText("home")).click();
             wd.findElement(By.name("group")).click();
             new Select(wd.findElement(By.name("group"))).selectByVisibleText(group.getName());
             wd.findElement(By.cssSelector("input[value = '" + cont.getId() + "']")).click();
