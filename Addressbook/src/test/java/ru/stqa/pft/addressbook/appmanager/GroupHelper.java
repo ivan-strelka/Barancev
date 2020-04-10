@@ -57,7 +57,6 @@ public class GroupHelper extends HelperBase {
         submitGroupCreation();
         groupCache = null;
         returnToGroupPage();
-
     }
 
     public boolean isThereAGroup() {

@@ -249,7 +249,6 @@ public class ContactHelper extends HelperBase {
         wd.findElement(By.name("to_group")).click();
         new Select(wd.findElement(By.name("to_group"))).selectByVisibleText(nameGroup.getName());
         wd.findElement(By.name("add")).click();
-        app.goTo().goToHomePage();
     }
 
     public void deletedGroup(ContactData cont, GroupData group, boolean have) {
